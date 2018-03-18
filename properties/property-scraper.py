@@ -16,7 +16,7 @@ def main():
             list_of_rows.append(row)
         print("")
 
-    with open('./output/python_output.csv', 'w') as f:
+    with open('./python_output.csv', 'w') as f:
         print("Writing files ...")
         writer = csv.writer(f)
         writer.writerow(['address', 'price', 'bed', 'bath', 'parking', 'property_type', 'internal_area', 'land_area', 'link'])
@@ -45,10 +45,7 @@ def get_property_info(property_url):
     price = property_soup.select_one('.listing-details__columns-container .listing-details__summary-left-column div').string
 
     property_attr = property_soup.select(".listing-details__summary-right-column .property-feature__feature-text-container")
-    [bed, bath, parking] = [x.get_text() for x in property_attr]
-    bed = bed.split()[0]
-    bath = bath.split()[0]
-    parking = parking.split()[0]
+    bed, bath, parking = [x.get_text().split()[0] for x in property_attr]
 
     property_details = property_soup.select(".listing-details__key-features--item .listing-details__key-features--value")
     property_type, internal_area, land_area = [x.get_text() for x in property_details]
